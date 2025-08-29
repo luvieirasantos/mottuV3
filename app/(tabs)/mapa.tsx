@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { View, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, Card, Title, Chip, Switch, Text } from 'react-native-paper';
 import { YardMap } from '@/src/components/YardMap';
@@ -9,8 +9,6 @@ import { CostCard } from '@/src/components/CostCard';
 import { useBLESim } from '@/src/hooks/useBLESim';
 import { DEFAULT_TOPOLOGIES, DEFAULT_BLE_CONFIG } from '@/src/utils/constants';
 import type { TopologyType } from '@/src/types';
-
-const { width } = Dimensions.get('window');
 
 export default function MapaScreen() {
   const theme = useTheme();
@@ -136,8 +134,6 @@ export default function MapaScreen() {
 
         <Card style={styles.mapCard}>
           <YardMap
-            width={width - 32}
-            height={(width - 32) * 0.75}
             motos={motos}
             estimatedPositions={estimatedPositions}
             anchors={currentTopology.anchors}
