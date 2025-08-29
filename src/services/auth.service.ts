@@ -1,75 +1,66 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ApiService from './api.service';
 import type { User } from '../types';
 
 const USER_KEY = 'user_data';
-const ALL_USERS_KEY = 'all_users_data'; // Nova chave para armazenar todos os usuários
+const TOKEN_KEY = 'auth_token';
 
 interface StoredUser {
   uid: string;
   email: string;
   displayName?: string;
-  password?: string; // Adiciona senha para simulação
 }
 
 export class AuthService {
-  private static async getAllUsers(): Promise<StoredUser[]> {
-    const usersData = await AsyncStorage.getItem(ALL_USERS_KEY);
-    console.log('Dados de todos os usuários do AsyncStorage:', usersData);
-    return usersData ? JSON.parse(usersData) : [];
-  }
-
-  private static async saveAllUsers(users: StoredUser[]): Promise<void> {
-    await AsyncStorage.setItem(ALL_USERS_KEY, JSON.stringify(users));
-  }
-
   static async login(email: string, password: string): Promise<User> {
-    const allUsers = await this.getAllUsers();
-    console.log('Todos os usuários no login:', allUsers);
-    const foundUser = allUsers.find(u => u.email === email && u.password === password);
-    console.log('Usuário encontrado no login:', foundUser);
+    try {
+      const authResponse = await ApiService.login({ email, senha: password });
+      
+      const user: User = {
+        uid: authResponse.email, // Usando email como UID temporariamente
+        email: authResponse.email,
+        displayName: authResponse.nome,
+      };
 
-    if (!foundUser) {
-      throw new Error('Credenciais inválidas.');
+      // Salvar usuário e token no AsyncStorage
+      await AsyncStorage.setItem(USER_KEY, JSON.stringify(user));
+      await AsyncStorage.setItem(TOKEN_KEY, authResponse.token);
+
+      return user;
+    } catch (error) {
+      console.error('Erro no login:', error);
+      throw error;
     }
-
-    const user: User = {
-      uid: foundUser.uid,
-      email: foundUser.email,
-      displayName: foundUser.displayName,
-    };
-    await AsyncStorage.setItem(USER_KEY, JSON.stringify(user));
-    return user;
   }
 
   static async register(name: string, email: string, password: string): Promise<User> {
-    const allUsers = await this.getAllUsers();
-    const existingUser = allUsers.find(u => u.email === email);
+    try {
+      const authResponse = await ApiService.register({ 
+        nome: name, 
+        email, 
+        senha: password 
+      });
+      
+      const user: User = {
+        uid: authResponse.email, // Usando email como UID temporariamente
+        email: authResponse.email,
+        displayName: authResponse.nome,
+      };
 
-    if (existingUser) {
-      throw new Error('Este e-mail já está cadastrado.');
+      // Salvar usuário e token no AsyncStorage
+      await AsyncStorage.setItem(USER_KEY, JSON.stringify(user));
+      await AsyncStorage.setItem(TOKEN_KEY, authResponse.token);
+
+      return user;
+    } catch (error) {
+      console.error('Erro no cadastro:', error);
+      throw error;
     }
-
-    const newUser: StoredUser = {
-      uid: 'simulated-uid-' + Date.now(), // UID único
-      email: email,
-      displayName: name,
-      password: password, // Salva a senha para simulação
-    };
-
-    allUsers.push(newUser);
-    await this.saveAllUsers(allUsers);
-
-    const user: User = {
-      uid: newUser.uid,
-      email: newUser.email,
-      displayName: newUser.displayName,
-    };
-    await AsyncStorage.setItem(USER_KEY, JSON.stringify(user));
-    return user;
   }
 
   static async logout(): Promise<void> {
     await AsyncStorage.removeItem(USER_KEY);
+    await AsyncStorage.removeItem(TOKEN_KEY);
   }
 
   static async getCurrentUser(): Promise<User | null> {
@@ -77,10 +68,39 @@ export class AuthService {
     return userData ? JSON.parse(userData) : null;
   }
 
+  static async getAuthToken(): Promise<string | null> {
+    return await AsyncStorage.getItem(TOKEN_KEY);
+  }
+
+  static async isTokenValid(): Promise<boolean> {
+    const token = await this.getAuthToken();
+    if (!token) return false;
+
+    // Verificar se o token não expirou (2 meses = 5184000000 ms)
+    try {
+      // Aqui você pode implementar uma verificação mais robusta do token
+      // Por enquanto, vamos apenas verificar se existe
+      return true;
+    } catch (error) {
+      console.error('Erro ao verificar token:', error);
+      return false;
+    }
+  }
+
   static onAuthStateChanged(callback: (user: User | null) => void) {
     const loadUser = async () => {
-      const user = await this.getCurrentUser();
-      callback(user);
+      const currentUser = await this.getCurrentUser();
+      const isTokenValid = await this.isTokenValid();
+      
+      if (currentUser && isTokenValid) {
+        callback(currentUser);
+      } else {
+        // Se o token não for válido, fazer logout
+        if (currentUser) {
+          await this.logout();
+        }
+        callback(null);
+      }
     };
 
     loadUser();

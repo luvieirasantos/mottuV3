@@ -9,7 +9,17 @@ export const useAuth = () => {
   useEffect(() => {
     const loadInitialUser = async () => {
       const currentUser = await AuthService.getCurrentUser();
-      setUser(currentUser);
+      const isTokenValid = await AuthService.isTokenValid();
+      
+      if (currentUser && isTokenValid) {
+        setUser(currentUser);
+      } else {
+        // Se o token não for válido, fazer logout
+        if (currentUser) {
+          await AuthService.logout();
+        }
+        setUser(null);
+      }
       setIsLoading(false);
     };
     loadInitialUser();

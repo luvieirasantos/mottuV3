@@ -39,6 +39,9 @@ export interface User {
   displayName?: string;
 }
 
+// Re-export dos tipos da API
+export * from './api.types';
+
 export interface Metrics {
   p50: number;
   p90: number;

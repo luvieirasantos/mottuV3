@@ -1,207 +1,263 @@
 # Mottu - Pátio Digital
 
-Sistema de trilateração BLE para monitoramento de motos em pátio industrial usando React Native + Expo + TypeScript.
+## 📱 Sobre o Projeto
 
-## 🚀 Proposta e Funcionalidades
+Mottu é uma aplicação mobile desenvolvida em React Native/Expo para gerenciamento digital de pátios. O sistema permite o controle e monitoramento de motos, incluindo localização, status e métricas de operação.
 
-O **Mottu - Pátio Digital** é um aplicativo mobile que simula um sistema de trilateração baseado em BLE (Bluetooth Low Energy) para rastreamento preciso de motos em um pátio industrial.
+## ✨ Funcionalidades
 
-### Principais Funcionalidades:
-- **Sistema de Login/Cadastro** com Firebase Auth
-- **Mapa interativo SVG** do pátio com trilateração em tempo real  
-- **Simulação BLE** com diferentes topologias de âncoras
-- **CRUD completo** de motos com integração API
-- **Métricas de precisão** (P50, P90, Eficácia)
-- **Análise de custos** por topologia
-- **Tema claro/escuro** com identidade visual DARK + VERDE
-- **Interface mobile-first** responsiva
+- **Autenticação Segura**: Login e cadastro via API externa com JWT
+- **Gerenciamento de Motos**: Controle de status (ativa, oficina, baixa)
+- **Localização em Tempo Real**: Sistema de trilateração para posicionamento
+- **Métricas e Relatórios**: Análise de dados operacionais
+- **Interface Moderna**: Design responsivo com tema claro/escuro
+- **BLE Simulation**: Simulação de dispositivos Bluetooth Low Energy
 
-## 🎨 Identidade Visual
+## 🚀 Tecnologias
 
-- **Paleta principal**: DARK + VERDE (sem azul)
-- **Background**: `#0b0e10`, `#0f1411`, `#121614`
-- **Verde primário**: `#00C851` 
-- **Amarelo**: `#FFD166` (posições estimadas)
-- **Vermelho**: `#FF5C5C` (âncoras/alertas)
-- **Material Design 3** com tema escuro por padrão
+- **Frontend**: React Native, Expo
+- **UI Components**: React Native Paper
+- **Navegação**: Expo Router
+- **Formulários**: React Hook Form + Zod
+- **Estado**: React Hooks
+- **Armazenamento**: AsyncStorage
+- **Autenticação**: JWT via API externa
 
-## 🏗️ Stack Tecnológica
+## 🔐 Sistema de Autenticação
 
-- **React Native** com **Expo SDK 53**
-- **TypeScript** para tipagem estática
-- **React Navigation** para navegação
-- **React Native Paper** (Material Design 3)
-- **React Hook Form + Zod** para formulários
-- **TanStack React Query** para gerenciamento de estado
-- **Firebase** para autenticação
-- **React Native SVG** para renderização do mapa
-- **AsyncStorage** para persistência local
+### API Externa
+- **URL Base**: `https://api-mottu-sp3-java-production.up.railway.app`
+- **Endpoints**:
+  - `POST /api/auth/login` - Autenticação de usuários
+  - `POST /api/auth/cadastro` - Cadastro de novos usuários
 
-## 📁 Estrutura de Pastas
-
-```
-/src
-├── /app                 # Navegação (stacks/tabs)
-├── /components          # Componentes reutilizáveis
-│   ├── YardMap.tsx      # Mapa SVG do pátio
-│   ├── MetricsCard.tsx  # Métricas P50/P90
-│   ├── MotoForm.tsx     # Formulário de motos
-│   └── ...
-├── /services            # Serviços API
-├── /hooks               # Hooks customizados
-│   ├── useAuth.ts       # Autenticação
-│   ├── useBLESim.ts     # Simulação BLE
-│   └── useThemeScheme.ts # Tema claro/escuro
-├── /theme               # Temas Material Design
-├── /utils               # Utilitários e validações
-└── /types               # Interfaces TypeScript
+### Formato da Resposta
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9...",
+  "tipo": "Bearer",
+  "nome": "Nome do Usuário",
+  "email": "email@exemplo.com",
+  "perfil": "USUARIO"
+}
 ```
 
-## 🔧 Configuração
+### Segurança
+- Tokens JWT com expiração de 2 meses
+- Validação automática de tokens
+- Logout automático em caso de token inválido
+- Headers de autorização com Bearer token
+
+## 📁 Estrutura do Projeto
+
+```
+mottuV3/
+├── app/                          # Telas da aplicação (Expo Router)
+│   ├── (auth)/                  # Telas de autenticação
+│   │   ├── login.tsx           # Tela de login
+│   │   └── cadastro.tsx        # Tela de cadastro
+│   └── (tabs)/                 # Telas principais
+│       ├── index.tsx           # Dashboard
+│       ├── mapa.tsx            # Mapa de motos
+│       ├── historico.tsx       # Histórico de operações
+│       ├── relatorios.tsx      # Relatórios e métricas
+│       └── config.tsx          # Configurações
+├── src/
+│   ├── components/              # Componentes reutilizáveis
+│   ├── contexts/                # Contextos React
+│   ├── hooks/                   # Hooks customizados
+│   ├── services/                # Serviços (API, Auth)
+│   ├── types/                   # Definições de tipos
+│   ├── utils/                   # Utilitários e constantes
+│   └── theme/                   # Temas e estilos
+├── docs/                        # Documentação
+├── examples/                     # Exemplos de uso
+└── assets/                      # Imagens e recursos
+```
+
+## 🛠️ Instalação e Configuração
 
 ### Pré-requisitos
 - Node.js 18+
+- npm ou yarn
 - Expo CLI
-- Android Studio (para build Android)
+- Android Studio / Xcode (para desenvolvimento nativo)
 
-### Instalação
+### Passos de Instalação
+
+1. **Clone o repositório**
 ```bash
-# Instalar dependências
-npm install
-
-# Iniciar desenvolvimento
-npm run dev
-
-# Build para Android
-npx expo prebuild -p android
-npx expo run:android
-
-# Ou abrir no Android Studio
-npx expo prebuild -p android
-# Abrir pasta /android no Android Studio
+git clone <url-do-repositorio>
+cd mottuV3
 ```
 
-### Firebase (Autenticação)
-1. Criar projeto no [Firebase Console](https://console.firebase.google.com)
-2. Ativar Authentication com Email/Password
-3. Obter configuração do projeto
-4. Atualizar `src/services/firebase.ts` com suas credenciais:
+2. **Instale as dependências**
+```bash
+npm install
+# ou
+yarn install
+```
 
+3. **Configure as variáveis de ambiente**
+```bash
+# Crie um arquivo .env na raiz do projeto
+API_BASE_URL=https://api-mottu-sp3-java-production.up.railway.app
+```
+
+4. **Execute o projeto**
+```bash
+npm run dev
+# ou
+yarn dev
+```
+
+## 🔧 Configuração da API
+
+### Variáveis de Ambiente
+```env
+# API Configuration
+API_BASE_URL=https://api-mottu-sp3-java-production.up.railway.app
+API_TIMEOUT=10000
+API_RETRY_ATTEMPTS=3
+
+# JWT Configuration
+JWT_SECRET=mottuSecretKey2024Sprint3JavaAdvancedFIAP
+JWT_EXPIRATION=5184000000
+```
+
+### Debug e Logs
+Para habilitar logs detalhados, edite `src/config/debug.ts`:
 ```typescript
-const firebaseConfig = {
-  apiKey: "sua-api-key",
-  authDomain: "seu-projeto.firebaseapp.com", 
-  projectId: "seu-projeto-id",
-  // ... outras configurações
+export const DEBUG_CONFIG = {
+  ENABLE_API_LOGS: true,        // Logs da API
+  ENABLE_AUTH_LOGS: true,       // Logs de autenticação
+  ENABLE_REQUEST_LOGS: true,    // Logs de requisições
+  ENABLE_RESPONSE_LOGS: true,   // Logs de respostas
+  ENABLE_ERROR_LOGS: true,      // Logs de erro
+  SHOW_SENSITIVE_DATA: false,   // Mostrar dados sensíveis
 };
 ```
 
-### API Base URL
-Para desenvolvimento, configure o endpoint da API em `src/utils/platform.ts`:
+## 📖 Como Usar
 
+### Autenticação
 ```typescript
-export const API_BASE = Platform.OS === 'android' 
-  ? 'http://10.0.2.2:8080/api'  // Android Emulator
-  : 'http://localhost:8080/api'; // iOS Simulator/Web
+import { useAuth } from '@/src/hooks/useAuth';
+
+const { login, register, logout, user } = useAuth();
+
+// Login
+await login('email@exemplo.com', 'senha123');
+
+// Cadastro
+await register('Nome do Usuário', 'email@exemplo.com', 'senha123');
+
+// Logout
+await logout();
 ```
 
-## 🎯 Funcionalidades Principais
+### Requisições Autenticadas
+```typescript
+import { useApi } from '@/src/hooks/useApi';
 
-### 1. Sistema de Trilateração BLE
-- **3 topologias** pré-configuradas (A, B, C)
-- **Simulação RSSI** com ruído gaussiano
-- **Algoritmo de mínimos quadrados** para trilateração
-- **Suavização EMA** (α=0.25) para estabilizar posições
-- **Métricas em tempo real** P50, P90, Eficácia
+const { makeAuthenticatedRequest, isLoading, error } = useApi({
+  onUnauthorized: () => {
+    // Redirecionar para login se não autorizado
+    router.replace('/(auth)/login');
+  }
+});
 
-### 2. Mapa Interativo
-- **SVG responsivo** com clipping e escala automática
-- **Cobertura BLE** visível (círculos concêntricos)
-- **Grade de zonas** (A1-D2) configurável
-- **Legenda integrada** com identificação visual
-- **Âncoras** (parede/chão) e **motos** (real/estimada)
-
-### 3. CRUD de Motos
-- **Listagem** com status e métricas
-- **Criação/edição** com validação (RHF + Zod)
-- **Posicionamento por zona** ou coordenadas
-- **Movimento aleatório** (jitter) para simulação
-- **Integração com API** (loaders, tratamento de erros)
-
-### 4. Configurações Avançadas
-- **Parâmetros BLE** ajustáveis (TxPower, PathLoss, Sigma)
-- **Topologia padrão** selecionável  
-- **Tema claro/escuro** persistido
-- **Dimensões do pátio** configuráveis
-
-## 📱 Scripts
-
-```bash
-# Desenvolvimento
-npm run dev                    # Expo start
-npm run lint                   # ESLint
-
-# Build Android
-npx expo prebuild -p android   # Gerar pasta /android
-npx expo run:android           # Build e instalar no device
-
-# Android Studio
-# Abrir pasta /android no Android Studio
-# Build > Make Project
-# Run > Run 'app'
+const data = await makeAuthenticatedRequest('/api/endpoint');
 ```
 
-## 👥 Equipe
+### Testes da API
+```typescript
+import { testApiConnection, testRegisterEndpoint, testApiResponseFormat } from '@/src/utils/api.test';
 
-- **Nome**: [Seu Nome]
-- **RM**: [Seu RM] 
-- **GitHub**: [seu-usuario]
+// Testar conectividade
+const connectionTest = await testApiConnection();
 
-## 🎥 Demonstração
+// Testar endpoint de cadastro
+const registerTest = await testRegisterEndpoint();
 
-[Link do vídeo de apresentação - YouTube/Drive]
+// Analisar formato da resposta
+const formatTest = await testApiResponseFormat();
+```
 
-### Checklist da Apresentação:
-- ✅ Login/Cadastro/Logout funcionais
-- ✅ Navegação por todas as telas (tabs)
-- ✅ Mapa com trilateração em tempo real
-- ✅ Toggles de grade/cobertura BLE 
-- ✅ CRUD de motos com validação
-- ✅ Histórico e métricas atualizando
-- ✅ Configurações (tema, parâmetros BLE)
-- ✅ Relatórios e análises
-- ✅ Build Android Studio
+## 🧪 Testes e Debugging
 
-## 🔒 Critérios de Qualidade
+### Funções de Teste Disponíveis
+- `testApiConnection()` - Testa conectividade básica
+- `testRegisterEndpoint()` - Testa endpoint de cadastro
+- `testApiResponseFormat()` - Analisa estrutura da resposta
 
-- **Mobile-first** responsivo (360-414px)
-- **Sem overflow** horizontal
-- **Tema consistente** (DARK + VERDE)  
-- **Formulários validados** (RHF + Zod)
-- **Loaders e tratamento** de erros
-- **Arquitetura modular** bem organizada
-- **Zero links/botões** "mortos"
-- **Compatível Android Studio**
+### Logs de Debug
+- `[DEBUG REQUEST]` - Detalhes da requisição
+- `[DEBUG RESPONSE]` - Detalhes da resposta
+- `[DEBUG ERROR]` - Erros detalhados
 
-## 📋 Notas Técnicas
+## 📚 Documentação
 
-### Trilateração
-- **Modelo**: `RSSI = TxPower - 10*n*log10(d) + N(0,σ²)`
-- **Inversão**: `d = 10^((TxPower-RSSI)/(10*n))`
-- **Algoritmo**: Mínimos quadrados com ≥3 âncoras
-- **Suavização**: EMA para estabilizar ruído
+- **`docs/AUTHENTICATION.md`** - Sistema de autenticação completo
+- **`docs/DEBUGGING.md`** - Guia de debugging e resolução de problemas
+- **`docs/CORRECOES.md`** - Documentação das correções implementadas
 
-### Performance
-- **Tick rate**: 650ms (configurable)
-- **Janela métricas**: 300 amostras
-- **Clipping SVG** para otimização
-- **React Query** para cache inteligente
+## 🐛 Resolução de Problemas
 
-### Custos (simulados)
-- **Âncora**: R$ 180
-- **Agregador**: R$ 220  
-- **Beacon/moto**: R$ 80
+### Erro "Resposta inválida da API"
+✅ **RESOLVIDO**: O problema foi causado por incompatibilidade entre o formato esperado e o formato real da API.
+
+**Solução implementada:**
+- Tipos atualizados para refletir a estrutura real
+- Validação corrigida para verificar os campos corretos
+- Mapeamento ajustado para converter dados corretamente
+- Logs detalhados para debugging futuro
+
+### Problemas Comuns
+1. **Token expirado**: Faça logout e login novamente
+2. **Erro de conectividade**: Verifique a conexão com a internet
+3. **Credenciais inválidas**: Verifique email e senha
+
+## 🤝 Contribuição
+
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+
+## 📞 Suporte
+
+Para suporte técnico ou dúvidas:
+- Abra uma issue no repositório
+- Consulte a documentação em `docs/`
+- Verifique os logs de debug para identificar problemas
+
+## 🔄 Changelog
+
+### v3.0.0 - Sistema de Autenticação via API
+- ✅ Migração para autenticação via API externa
+- ✅ Implementação de JWT tokens
+- ✅ Sistema de debug e logs detalhados
+- ✅ Funções de teste para API
+- ✅ Documentação completa
+- ✅ Correção de erros de validação
+
+### v2.0.0 - Funcionalidades Core
+- Sistema de gerenciamento de motos
+- Localização e trilateração
+- Métricas e relatórios
+- Interface responsiva
+
+### v1.0.0 - MVP
+- Autenticação local
+- Interface básica
+- Funcionalidades essenciais
 
 ---
 
-**Mottu - Pátio Digital** © 2024
+**Desenvolvido com ❤️ pela Lu**

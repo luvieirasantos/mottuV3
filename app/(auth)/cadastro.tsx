@@ -12,7 +12,7 @@ import {
 } from 'react-native-paper';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { useAuth } from '@/src/hooks/useAuth';
 import { registerSchema } from '@/src/utils/validators';
 
@@ -26,6 +26,7 @@ type RegisterForm = {
 export default function CadastroScreen() {
   const theme = useTheme();
   const { register } = useAuth();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -46,6 +47,7 @@ export default function CadastroScreen() {
     
     try {
       await register(data.name, data.email, data.password);
+      router.replace('/(tabs)');
     } catch (err: any) {
       setError(err.message || 'Erro ao criar conta');
     } finally {
