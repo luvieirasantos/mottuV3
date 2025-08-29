@@ -16,15 +16,25 @@ export const useAuth = () => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const loggedInUser = await AuthService.login(email, password);
-    setUser(loggedInUser);
-    return loggedInUser;
+    try {
+      const loggedInUser = await AuthService.login(email, password);
+      setUser(loggedInUser);
+      return loggedInUser;
+    } catch (error) {
+      console.error('Erro no login (useAuth):', error);
+      throw error;
+    }
   };
 
   const register = async (name: string, email: string, password: string) => {
-    const registeredUser = await AuthService.register(name, email, password);
-    setUser(registeredUser);
-    return registeredUser;
+    try {
+      const registeredUser = await AuthService.register(name, email, password);
+      setUser(registeredUser);
+      return registeredUser;
+    } catch (error) {
+      console.error('Erro no cadastro (useAuth):', error);
+      throw error;
+    }
   };
 
   const logout = async () => {

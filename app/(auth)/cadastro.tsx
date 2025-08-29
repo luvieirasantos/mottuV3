@@ -40,6 +40,7 @@ export default function CadastroScreen() {
   });
 
   const onSubmit = async (data: RegisterForm) => {
+    console.log('Tentando cadastro com:', data.email);
     setLoading(true);
     setError('');
     

@@ -12,7 +12,7 @@ import {
 } from 'react-native-paper';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { useAuth } from '@/src/hooks/useAuth';
 import { loginSchema } from '@/src/utils/validators';
 
@@ -24,6 +24,7 @@ type LoginForm = {
 export default function LoginScreen() {
   const theme = useTheme();
   const { login } = useAuth();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -36,12 +37,15 @@ export default function LoginScreen() {
   });
 
   const onSubmit = async (data: LoginForm) => {
+    console.log('Tentando login com:', data.email);
     setLoading(true);
     setError('');
     
     try {
       await login(data.email, data.password);
+      router.replace('/(tabs)');
     } catch (err: any) {
+      console.error('Erro no onSubmit de login:', err);
       setError(err.message || 'Erro ao fazer login');
     } finally {
       setLoading(false);
