@@ -1,26 +1,21 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { PaperProvider } from 'react-native-paper';
-import { useThemeScheme } from '@/src/hooks/useThemeScheme';
-import { paperThemeDark } from '@/src/theme/paperThemeDark';
-import { paperThemeLight } from '@/src/theme/paperThemeLight';
+import { useTheme } from 'react-native-paper';
 
 export default function TabLayout() {
-  const { isDarkTheme } = useThemeScheme();
-  const theme = isDarkTheme ? paperThemeDark : paperThemeLight;
+  const theme = useTheme();
 
   return (
-    <PaperProvider theme={theme}>
-      <Tabs
-        screenOptions={{
-          headerShown: false,
-          tabBarStyle: {
-            backgroundColor: theme.colors.surface,
-            borderTopColor: theme.colors.outline,
-          },
-          tabBarActiveTintColor: theme.colors.primary,
-          tabBarInactiveTintColor: theme.colors.onSurfaceVariant,
-        }}>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: theme.colors.surface,
+          borderTopColor: theme.colors.outline,
+        },
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarInactiveTintColor: theme.colors.onSurfaceVariant,
+      }}>
         <Tabs.Screen
           name="index"
           options={{
@@ -67,6 +62,5 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-    </PaperProvider>
   );
 }

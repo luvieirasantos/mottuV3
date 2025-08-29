@@ -11,15 +11,18 @@ import {
   TextInput,
   Chip
 } from 'react-native-paper';
-import { useThemeScheme } from '@/src/hooks/useThemeScheme';
+import { useThemeContext } from '@/src/contexts/ThemeContext';
 import { useAuth } from '@/src/hooks/useAuth';
 import { DEFAULT_BLE_CONFIG } from '@/src/utils/constants';
 import type { TopologyType } from '@/src/types';
 
 export default function ConfigScreen() {
   const theme = useTheme();
-  const { isDarkTheme, toggleTheme } = useThemeScheme();
+  const { isDarkTheme, toggleTheme } = useThemeContext();
   const { logout, user } = useAuth();
+  
+  console.log('ConfigScreen - isDarkTheme:', isDarkTheme);
+  console.log('ConfigScreen - theme background:', theme.colors.background);
   
   const [bleConfig, setBleConfig] = useState(DEFAULT_BLE_CONFIG);
   const [defaultTopology, setDefaultTopology] = useState<TopologyType>('A');
@@ -27,6 +30,11 @@ export default function ConfigScreen() {
   const handleSaveBLEConfig = () => {
     // Salvar configurações no AsyncStorage
     console.log('Salvando configurações BLE:', bleConfig);
+  };
+
+  const handleToggleTheme = () => {
+    console.log('Switch clicado! Tema atual:', isDarkTheme);
+    toggleTheme();
   };
 
   const handleLogout = async () => {
@@ -95,7 +103,7 @@ export default function ConfigScreen() {
               right={() => (
                 <Switch
                   value={isDarkTheme}
-                  onValueChange={toggleTheme}
+                  onValueChange={handleToggleTheme}
                   thumbColor={isDarkTheme ? theme.colors.primary : theme.colors.outline}
                   trackColor={{ 
                     false: theme.colors.surfaceVariant, 

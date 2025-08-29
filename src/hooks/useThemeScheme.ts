@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const THEME_KEY = 'theme_scheme';
 
 export const useThemeScheme = () => {
-  const [isDarkTheme, setIsDarkTheme] = useState<boolean | undefined>(undefined);
+  const [isDarkTheme, setIsDarkTheme] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -32,6 +32,7 @@ export const useThemeScheme = () => {
   const toggleTheme = async () => {
     try {
       const newTheme = !isDarkTheme; // Inverte o tema atual
+      console.log('Alternando tema de', isDarkTheme, 'para', newTheme);
       setIsDarkTheme(newTheme);
       await AsyncStorage.setItem(THEME_KEY, newTheme ? 'dark' : 'light');
       console.log('Tema salvo no AsyncStorage:', newTheme ? 'dark' : 'light');
@@ -40,5 +41,5 @@ export const useThemeScheme = () => {
     }
   };
 
-  return { isDarkTheme: isDarkTheme ?? false, toggleTheme, isLoading };
+  return { isDarkTheme, toggleTheme, isLoading };
 };
