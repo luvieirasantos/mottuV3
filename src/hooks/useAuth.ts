@@ -7,24 +7,24 @@ export const useAuth = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = AuthService.onAuthStateChanged((user) => {
-      setUser(user);
+    const loadInitialUser = async () => {
+      const currentUser = await AuthService.getCurrentUser();
+      setUser(currentUser);
       setIsLoading(false);
-    });
-
-    return unsubscribe;
+    };
+    loadInitialUser();
   }, []);
 
   const login = async (email: string, password: string) => {
-    const user = await AuthService.login(email, password);
-    setUser(user);
-    return user;
+    const loggedInUser = await AuthService.login(email, password);
+    setUser(loggedInUser);
+    return loggedInUser;
   };
 
   const register = async (name: string, email: string, password: string) => {
-    const user = await AuthService.register(name, email, password);
-    setUser(user);
-    return user;
+    const registeredUser = await AuthService.register(name, email, password);
+    setUser(registeredUser);
+    return registeredUser;
   };
 
   const logout = async () => {

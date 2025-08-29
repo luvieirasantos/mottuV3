@@ -14,6 +14,7 @@ export const useThemeScheme = () => {
   const loadTheme = async () => {
     try {
       const savedTheme = await AsyncStorage.getItem(THEME_KEY);
+      console.log('Tema carregado do AsyncStorage:', savedTheme);
       if (savedTheme !== null) {
         setIsDarkTheme(savedTheme === 'dark');
       }
@@ -29,6 +30,7 @@ export const useThemeScheme = () => {
       const newTheme = !isDarkTheme;
       setIsDarkTheme(newTheme);
       await AsyncStorage.setItem(THEME_KEY, newTheme ? 'dark' : 'light');
+      console.log('Tema salvo no AsyncStorage:', newTheme ? 'dark' : 'light');
     } catch (error) {
       console.error('Erro ao salvar tema:', error);
     }

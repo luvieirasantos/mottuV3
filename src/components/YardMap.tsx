@@ -39,9 +39,6 @@ export const YardMap: React.FC<YardMapProps> = ({
 }) => {
   const theme = useTheme();
 
-  const scaleX = width / yardWidth;
-  const scaleY = height / yardHeight;
-
   const styles = StyleSheet.create({
     container: {
       backgroundColor: theme.colors.surface,
@@ -77,22 +74,22 @@ export const YardMap: React.FC<YardMapProps> = ({
   const renderGrid = () => {
     if (!showGrid) return null;
 
-    const lines = [];
+    const lines: React.JSX.Element[] = [];
     const zoneWidth = yardWidth / 2;
     const zoneHeight = yardHeight / 4;
 
     // Linhas verticais
     for (let i = 1; i < 2; i++) {
-      const x = i * zoneWidth * scaleX;
+      const x = i * zoneWidth;
       lines.push(
         <Line
           key={`v-${i}`}
           x1={x}
           y1={0}
           x2={x}
-          y2={height}
+          y2={yardHeight}
           stroke={theme.colors.outline}
-          strokeWidth="1"
+          strokeWidth="0.1"
           opacity={0.5}
         />
       );
@@ -100,16 +97,16 @@ export const YardMap: React.FC<YardMapProps> = ({
 
     // Linhas horizontais
     for (let i = 1; i < 4; i++) {
-      const y = i * zoneHeight * scaleY;
+      const y = i * zoneHeight;
       lines.push(
         <Line
           key={`h-${i}`}
           x1={0}
           y1={y}
-          x2={width}
+          x2={yardWidth}
           y2={y}
           stroke={theme.colors.outline}
-          strokeWidth="1"
+          strokeWidth="0.1"
           opacity={0.5}
         />
       );
@@ -120,15 +117,15 @@ export const YardMap: React.FC<YardMapProps> = ({
     const zones = ['A', 'B', 'C', 'D'];
     for (let row = 0; row < 4; row++) {
       for (let col = 0; col < 2; col++) {
-        const x = (col * zoneWidth + zoneWidth / 2) * scaleX;
-        const y = (row * zoneHeight + zoneHeight / 2) * scaleY;
+        const x = (col * zoneWidth + zoneWidth / 2);
+        const y = (row * zoneHeight + zoneHeight / 2);
         labels.push(
           <SvgText
             key={`${zones[row]}${col + 1}`}
             x={x}
             y={y}
             textAnchor="middle"
-            fontSize="12"
+            fontSize="1"
             fill={theme.colors.onSurfaceVariant}
             opacity={0.7}
           >
@@ -144,18 +141,18 @@ export const YardMap: React.FC<YardMapProps> = ({
   const renderCoverage = () => {
     if (!showCoverage) return null;
 
-    const coverage = [];
+    const coverage: React.JSX.Element[] = [];
     anchors.forEach((anchor, index) => {
       for (let range = 5; range <= 20; range += 5) {
         coverage.push(
           <Circle
             key={`coverage-${index}-${range}`}
-            cx={anchor.x * scaleX}
-            cy={anchor.y * scaleY}
-            r={range * scaleX}
+            cx={anchor.x}
+            cy={anchor.y}
+            r={range}
             fill="rgba(0, 200, 81, 0.08)"
             stroke="#1e2823"
-            strokeWidth="0.5"
+            strokeWidth="0.05"
             clipPath="url(#yardClip)"
           />
         );
@@ -169,18 +166,18 @@ export const YardMap: React.FC<YardMapProps> = ({
     return anchors.map((anchor, index) => (
       <G key={anchor.id}>
         <Rect
-          x={anchor.x * scaleX - 6}
-          y={anchor.y * scaleY - 6}
-          width="12"
-          height="12"
+          x={anchor.x - 0.6}
+          y={anchor.y - 0.6}
+          width="1.2"
+          height="1.2"
           fill="#FF5C5C"
-          rx="2"
+          rx="0.2"
         />
         <SvgText
-          x={anchor.x * scaleX}
-          y={anchor.y * scaleY - 10}
+          x={anchor.x}
+          y={anchor.y - 1}
           textAnchor="middle"
-          fontSize="10"
+          fontSize="1"
           fill={theme.colors.onSurface}
           fontWeight="bold"
         >
@@ -191,16 +188,16 @@ export const YardMap: React.FC<YardMapProps> = ({
   };
 
   const renderMotos = () => {
-    const elements = [];
+    const elements: React.JSX.Element[] = [];
 
     motos.forEach((moto) => {
       // Moto real (verde)
       elements.push(
         <Circle
           key={`real-${moto.id}`}
-          cx={moto.x * scaleX}
-          cy={moto.y * scaleY}
-          r="6"
+          cx={moto.x}
+          cy={moto.y}
+          r="0.6"
           fill="#00C851"
           onPress={() => onMotoPress?.(moto)}
         />
@@ -212,9 +209,9 @@ export const YardMap: React.FC<YardMapProps> = ({
         elements.push(
           <Circle
             key={`estimated-${moto.id}`}
-            cx={estimated.x * scaleX}
-            cy={estimated.y * scaleY}
-            r="6"
+            cx={estimated.x}
+            cy={estimated.y}
+            r="0.6"
             fill="#FFD166"
             opacity={0.8}
           />
@@ -225,10 +222,10 @@ export const YardMap: React.FC<YardMapProps> = ({
       elements.push(
         <SvgText
           key={`label-${moto.id}`}
-          x={moto.x * scaleX}
-          y={moto.y * scaleY - 12}
+          x={moto.x}
+          y={moto.y - 1.2}
           textAnchor="middle"
-          fontSize="10"
+          fontSize="1"
           fill={theme.colors.onSurface}
           fontWeight="bold"
         >
@@ -242,10 +239,10 @@ export const YardMap: React.FC<YardMapProps> = ({
 
   return (
     <View style={styles.container}>
-      <Svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+      <Svg width={width} height={height} viewBox={`0 0 ${yardWidth} ${yardHeight}`}>
         <Defs>
           <ClipPath id="yardClip">
-            <Rect x="0" y="0" width={width} height={height} />
+            <Rect x="0" y="0" width={yardWidth} height={yardHeight} />
           </ClipPath>
         </Defs>
 
@@ -254,11 +251,11 @@ export const YardMap: React.FC<YardMapProps> = ({
           <Rect
             x="0"
             y="0"
-            width={width}
-            height={height}
+            width={yardWidth}
+            height={yardHeight}
             fill={theme.colors.surfaceVariant}
             stroke={theme.colors.outline}
-            strokeWidth="2"
+            strokeWidth="0.2"
           />
 
           {/* Grade de zonas */}
