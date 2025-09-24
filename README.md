@@ -4,6 +4,24 @@
 
 Mottu é uma aplicação mobile desenvolvida em React Native/Expo para gerenciamento digital de pátios. O sistema permite o controle e monitoramento de motos, incluindo localização, status e métricas de operação.
 
+
+## 📱 Link da Versão Publicada no Expo
+
+**Link do Expo Go:** 
+
+https://expo.dev/accounts/luvieirasantos/projects/bolt-expo-nativewind/updates/aac25f3b-aef0-48b2-9198-0ffa2b61a7ce
+
+## 📱 Credenciais de teste
+
+**credenciais:** 
+user: henrique3.terceiro@gmail.com
+password: 123456
+
+## 👥 Integrantes da Equipe
+- Nome 1 — RM: 558935 — Lu Vieira Santos
+- Nome 2 — RM: 555656 — Melissa Pereira
+- Nome 3 — RM: 558755 — E‑mail: Diego Furigo
+
 ## ✨ Funcionalidades
 
 - **Autenticação Segura**: Login e cadastro via API externa com JWT
@@ -225,6 +243,8 @@ const formatTest = await testApiResponseFormat();
 3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
 4. Push para a branch (`git push origin feature/AmazingFeature`)
 5. Abra um Pull Request
+
+
 
 ## 📄 Licença
 
