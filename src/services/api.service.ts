@@ -14,31 +14,38 @@ class ApiService {
     endpoint: string,
     options: RequestInit = {}
   ): Promise<ApiResponse<T>> {
+    const url = `${API_BASE_URL}${endpoint}`;
+    
+    const defaultOptions: RequestInit = {
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+      ...options,
+    };
+
+    debugRequest(options.method || 'GET', url, defaultOptions);
+    safeLog('Opções da requisição:', defaultOptions, true);
+
     try {
-      const url = `${API_BASE_URL}${endpoint}`;
-      
-      const defaultOptions: RequestInit = {
-        headers: {
-          'Content-Type': 'application/json',
-          ...options.headers,
-        },
-        ...options,
-      };
-
-      debugRequest(options.method || 'GET', url, defaultOptions);
-      safeLog('Opções da requisição:', defaultOptions, true);
-
       const response = await fetch(url, defaultOptions);
-      const data = await response.json();
-
-      debugResponse(response.status, data);
 
       if (!response.ok) {
-        throw new Error(data.message || `Erro ${response.status}: ${response.statusText}`);
+        // Se a resposta for um erro, o corpo pode não ser JSON.
+        // Leia como texto para evitar o SyntaxError.
+        const errorBody = await response.text();
+        throw new Error(errorBody || `Erro ${response.status}: ${response.statusText}`);
       }
 
+      const data = await response.json();
+      debugResponse(response.status, data);
       return data;
     } catch (error) {
+      console.error('--- ERRO DETALHADO DO FETCH ---');
+      console.error('URL da tentativa:', url);
+      console.error('Objeto de erro:', error);
+      console.error('---------------------------------');
+      
       debugError('API Request', error);
       throw error;
     }
@@ -52,15 +59,21 @@ class ApiService {
 
     // Log detalhado para debug
     safeLog('Resposta completa da API (login):', response, true);
-    safeLog('response.token:', response.token, true);
-    safeLog('response.nome:', response.nome, true);
-    safeLog('response.email:', response.email, true);
-    safeLog('response.perfil:', response.perfil, true);
+
+    // Verificar se os dados estão em response.data (formato novo) ou diretamente em response (formato antigo)
+    let authData = response.data;
+    if (!authData && (response as any).token && (response as any).nome && (response as any).email) {
+      authData = response as any;
+    }
 
     // Verificar se a resposta tem o formato esperado
-    if (response.token && response.nome && response.email) {
+    if (authData && authData.token && authData.nome && authData.email) {
       safeLog('Formato da API detectado corretamente', null, false);
-      return response as AuthResponse;
+      safeLog('authData.token:', authData.token, true);
+      safeLog('authData.nome:', authData.nome, true);
+      safeLog('authData.email:', authData.email, true);
+      safeLog('authData.perfil:', authData.perfil, true);
+      return authData;
     }
 
     // Se nenhum formato for reconhecido, logar o erro e lançar exceção
@@ -77,10 +90,16 @@ class ApiService {
     // Log detalhado para debug
     safeLog('Resposta completa da API (register):', response, true);
 
+    // Verificar se os dados estão em response.data (formato novo) ou diretamente em response (formato antigo)
+    let authData = response.data;
+    if (!authData && (response as any).token && (response as any).nome && (response as any).email) {
+      authData = response as any;
+    }
+
     // Verificar se a resposta tem o formato esperado
-    if (response.token && response.nome && response.email) {
+    if (authData && authData.token && authData.nome && authData.email) {
       safeLog('Formato da API detectado corretamente', null, false);
-      return response as AuthResponse;
+      return authData;
     }
 
     // Se nenhum formato for reconhecido, logar o erro e lançar exceção

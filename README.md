@@ -44,7 +44,7 @@ password: 123456
 ## 🔐 Sistema de Autenticação
 
 ### API Externa
-- **URL Base**: `https://api-mottu-sp3-java-production.up.railway.app`
+- **URL Base**: `https://api-mottu-sp3-java.onrender.com`
 - **Endpoints**:
   - `POST /api/auth/login` - Autenticação de usuários
   - `POST /api/auth/cadastro` - Cadastro de novos usuários
@@ -116,10 +116,13 @@ npm install
 yarn install
 ```
 
-3. **Configure as variáveis de ambiente**
+3. **(Opcional) Configure as variáveis de ambiente**
 ```bash
-# Crie um arquivo .env na raiz do projeto
-API_BASE_URL=https://api-mottu-sp3-java-production.up.railway.app
+# Para configurações avançadas, copie o arquivo de exemplo
+cp .env.example .env
+
+# A URL da API já está configurada por padrão para o Render
+# Não é necessário configurar nada para uso básico
 ```
 
 4. **Execute o projeto**
@@ -134,7 +137,7 @@ yarn dev
 ### Variáveis de Ambiente
 ```env
 # API Configuration
-API_BASE_URL=https://api-mottu-sp3-java-production.up.railway.app
+API_BASE_URL=https://api-mottu-sp3-java.onrender.com
 API_TIMEOUT=10000
 API_RETRY_ATTEMPTS=3
 
@@ -154,6 +157,33 @@ export const DEBUG_CONFIG = {
   ENABLE_ERROR_LOGS: true,      // Logs de erro
   SHOW_SENSITIVE_DATA: false,   // Mostrar dados sensíveis
 };
+```
+
+## 🚀 Deploy no Render
+
+### Configuração Básica (Recomendada)
+
+A aplicação já vem configurada com a URL da API do Render por padrão. Para deploy básico:
+
+1. **Conecte seu repositório no Render**
+2. **Configure as seguintes opções**:
+   - **Build Command**: `npm run build`
+   - **Start Command**: `npm start`
+   - **Node Version**: 18 ou superior
+
+### Configuração Avançada com Variáveis de Ambiente (Opcional)
+
+Para personalizar configurações, adicione as seguintes variáveis no painel "Environment":
+
+```env
+API_BASE_URL=https://api-mottu-sp3-java.onrender.com
+NODE_ENV=production
+JWT_SECRET=mottuSecretKey2024Sprint3JavaAdvancedFIAP
+TOKEN_EXPIRATION=5184000000
+REFRESH_THRESHOLD=86400000
+ENABLE_LOGS=false
+ENABLE_API_TESTS=false
+MOCK_API_RESPONSES=false
 ```
 
 ## 📖 Como Usar
@@ -258,6 +288,14 @@ Para suporte técnico ou dúvidas:
 - Verifique os logs de debug para identificar problemas
 
 ## 🔄 Changelog
+
+### v3.1.0 - Configuração de Ambiente e Deploy
+- ✅ Atualização do .gitignore com arquivos comuns do React Native/Expo
+- ✅ Criação do arquivo .env.example para documentar variáveis de ambiente
+- ✅ Migração da API para Render (https://api-mottu-sp3-java.onrender.com)
+- ✅ Configuração hardcoded da API para uso imediato (npm install + npm start)
+- ✅ Documentação completa para deploy no Render
+- ✅ Atualização do README com instruções de configuração
 
 ### v3.0.0 - Sistema de Autenticação via API
 - ✅ Migração para autenticação via API externa

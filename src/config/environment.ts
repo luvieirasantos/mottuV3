@@ -5,7 +5,7 @@ export const ENV = {
   
   // URLs da API
   API: {
-    BASE_URL: 'https://api-mottu-sp3-java-production.up.railway.app',
+    BASE_URL: 'https://api-mottu-sp3-java.onrender.com',
     TIMEOUT: 10000, // 10 segundos
     RETRY_ATTEMPTS: 3,
   },
