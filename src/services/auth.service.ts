@@ -58,6 +58,26 @@ export class AuthService {
     }
   }
 
+  static async loginWithoutApi(): Promise<User> {
+    try {
+      // Criar usuário mock sem fazer requisição para a API
+      const mockUser: User = {
+        uid: 'demo-user',
+        email: 'demo@mottu.com',
+        displayName: 'Usuário Demo',
+      };
+
+      // Salvar usuário mock no AsyncStorage
+      await AsyncStorage.setItem(USER_KEY, JSON.stringify(mockUser));
+      await AsyncStorage.setItem(TOKEN_KEY, 'demo-token');
+
+      return mockUser;
+    } catch (error) {
+      console.error('Erro no login sem API:', error);
+      throw error;
+    }
+  }
+
   static async logout(): Promise<void> {
     await AsyncStorage.removeItem(USER_KEY);
     await AsyncStorage.removeItem(TOKEN_KEY);

@@ -47,6 +47,17 @@ export const useAuth = () => {
     }
   };
 
+  const loginWithoutApi = async () => {
+    try {
+      const demoUser = await AuthService.loginWithoutApi();
+      setUser(demoUser);
+      return demoUser;
+    } catch (error) {
+      console.error('Erro no login sem API (useAuth):', error);
+      throw error;
+    }
+  };
+
   const logout = async () => {
     await AuthService.logout();
     setUser(null);
@@ -58,6 +69,7 @@ export const useAuth = () => {
     isAuthenticated: !!user,
     login,
     register,
+    loginWithoutApi,
     logout,
   };
 };

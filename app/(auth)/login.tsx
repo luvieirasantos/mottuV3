@@ -23,9 +23,10 @@ type LoginForm = {
 
 export default function LoginScreen() {
   const theme = useTheme();
-  const { login } = useAuth();
+  const { login, loginWithoutApi } = useAuth();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [demoLoading, setDemoLoading] = useState(false);
   const [error, setError] = useState('');
 
   const { control, handleSubmit, formState: { errors } } = useForm<LoginForm>({
@@ -40,7 +41,7 @@ export default function LoginScreen() {
     console.log('Tentando login com:', data.email);
     setLoading(true);
     setError('');
-    
+
     try {
       await login(data.email, data.password);
       router.replace('/(tabs)');
@@ -49,6 +50,22 @@ export default function LoginScreen() {
       setError(err.message || 'Erro ao fazer login');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const onDemoLogin = async () => {
+    console.log('Tentando login demo');
+    setDemoLoading(true);
+    setError('');
+
+    try {
+      await loginWithoutApi();
+      router.replace('/(tabs)');
+    } catch (err: any) {
+      console.error('Erro no login demo:', err);
+      setError(err.message || 'Erro ao fazer login demo');
+    } finally {
+      setDemoLoading(false);
     }
   };
 
@@ -163,6 +180,15 @@ export default function LoginScreen() {
               style={styles.button}
             >
               {loading ? <ActivityIndicator color={theme.colors.onPrimary} /> : 'Entrar'}
+            </Button>
+
+            <Button
+              mode="outlined"
+              onPress={onDemoLogin}
+              disabled={demoLoading || loading}
+              style={[styles.button, { marginTop: 8 }]}
+            >
+              {demoLoading ? <ActivityIndicator color={theme.colors.primary} /> : 'Entrar sem requisição da API'}
             </Button>
 
             <View style={styles.linkContainer}>

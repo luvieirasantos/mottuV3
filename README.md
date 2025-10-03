@@ -13,9 +13,12 @@ https://expo.dev/accounts/luvieirasantos/projects/bolt-expo-nativewind/updates/a
 
 ## 📱 Credenciais de teste
 
-**credenciais:** 
+**credenciais:**
 user: henrique3.terceiro@gmail.com
 password: 123456
+
+### 🔓 Modo Demo
+Para testar a aplicação sem fazer login na API, use o botão **"Entrar sem requisição da API"** na tela de login. Este modo cria um usuário demo e permite acessar todas as funcionalidades do app.
 
 ## 👥 Integrantes da Equipe
 - Nome 1 — RM: 558935 — Lu Vieira Santos
@@ -288,6 +291,13 @@ Para suporte técnico ou dúvidas:
 - Verifique os logs de debug para identificar problemas
 
 ## 🔄 Changelog
+
+### v3.2.0 - Modo Demo e Login sem API
+- ✅ Adição de botão "Entrar sem requisição da API" na tela de login
+- ✅ Implementação de login demo que cria usuário mock sem chamar a API
+- ✅ Funcionalidade completa para desenvolvimento e testes
+- ✅ Documentação do modo demo no README
+- ✅ Atualização do changelog
 
 ### v3.1.0 - Configuração de Ambiente e Deploy
 - ✅ Atualização do .gitignore com arquivos comuns do React Native/Expo
