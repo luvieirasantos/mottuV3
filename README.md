@@ -7,9 +7,18 @@ Mottu é uma aplicação mobile desenvolvida em React Native/Expo para gerenciam
 
 ## 📱 Link da Versão Publicada no Expo
 
-**Link do Expo Go:** 
+**Link do Expo Go:**
 
 https://expo.dev/accounts/luvieirasantos/projects/bolt-expo-nativewind/updates/aac25f3b-aef0-48b2-9198-0ffa2b61a7ce
+
+### QRCode para Instalação Direta
+
+![QRCode Expo](https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://expo.dev/accounts/luvieirasantos/projects/bolt-expo-nativewind/updates/aac25f3b-aef0-48b2-9198-0ffa2b61a7ce)
+
+**Como usar:**
+1. Instale o app **Expo Go** no seu celular ([Android](https://play.google.com/store/apps/details?id=host.exp.exponent) | [iOS](https://apps.apple.com/br/app/expo-go/id982107779))
+2. Escaneie o QRCode acima
+3. O app será carregado automaticamente
 
 ## 📱 Credenciais de teste
 
@@ -21,9 +30,21 @@ password: 123456
 Para testar a aplicação sem fazer login na API, use o botão **"Entrar sem requisição da API"** na tela de login. Este modo cria um usuário demo e permite acessar todas as funcionalidades do app.
 
 ## 👥 Integrantes da Equipe
-- Nome 1 — RM: 558935 — Lu Vieira Santos
-- Nome 2 — RM: 555656 — Melissa Pereira
-- Nome 3 — RM: 558755 — E‑mail: Diego Furigo
+- Lu Vieira Santos — RM: 558935
+- Melissa Pereira — RM: 555656
+- Diego Furigo — RM: 558755
+
+## 📋 Entrega Sprint 4 - Informações do Projeto
+
+
+
+### 🔖 Commit Final da Entrega
+**Hash do Commit:** `29e453968a2d989c2b4d31dac4e836493655b5aa`
+
+Para verificar este commit:
+```bash
+git checkout 29e453968a2d989c2b4d31dac4e836493655b5aa
+```
 
 ## ✨ Funcionalidades
 
