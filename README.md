@@ -39,7 +39,7 @@ Para testar a aplicação sem fazer login na API, use o botão **"Entrar sem req
 
 
 ### 🔖 Commit Final da Entrega
-**Hash do Commit:** `29e453968a2d989c2b4d31dac4e836493655b5aa`
+**Hash do Commit:** `13f38799b9f8ec8b8cc634028c9cb3079c0d9daf`
 
 Para verificar este commit:
 ```bash
