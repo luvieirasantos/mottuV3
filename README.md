@@ -54,6 +54,7 @@ user: henrique3.terceiro@gmail.com
 password: 123456
 
 ### 🔓 Modo Demo
+A API de login esta publicada no render, oque pode gerar um atraso grande na hora de logar
 Para testar a aplicação sem fazer login na API, use o botão **"Entrar sem requisição da API"** na tela de login. Este modo cria um usuário demo e permite acessar todas as funcionalidades do app.
 
 ## 👥 Integrantes da Equipe
