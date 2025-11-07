@@ -4,7 +4,11 @@
       "Bash(git log:*)",
       "Bash(npx expo install:*)",
       "WebSearch",
-      "Bash(npx expo-doctor:*)"
+      "Bash(npx expo-doctor:*)",
+      "Bash(npx eas-cli update:*)",
+      "Bash(npx expo publish:*)",
+      "Bash(set CI=1)",
+      "Bash(del:*)"
     ],
     "deny": [],
     "ask": []

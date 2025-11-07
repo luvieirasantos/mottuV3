@@ -4,21 +4,48 @@
 
 Mottu é uma aplicação mobile desenvolvida em React Native/Expo para gerenciamento digital de pátios. O sistema permite o controle e monitoramento de motos, incluindo localização, status e métricas de operação.
 
+**SDK Expo:** 54.0.22
+**React Native:** 0.81.5
+**React:** 19.1.0
+
 
 ## 📱 Link da Versão Publicada no Expo
 
+### 🚀 Versão Atual: SDK 54.0.22 (v4.0.0)
+
 **Link do Expo Go:**
 
-https://expo.dev/accounts/luvieirasantos/projects/bolt-expo-nativewind/updates/aac25f3b-aef0-48b2-9198-0ffa2b61a7ce
+https://expo.dev/accounts/luvieirasantos/projects/bolt-expo-nativewind/updates/fb3136a9-bf32-4fd4-ae6a-8b0a97bc292c
+
+**Update IDs:**
+- Runtime Version: 4.0.0
+- Android: `86dbddce-768c-421e-89e8-bb2772d97c27`
+- iOS: `f0e2f582-b8bb-4c80-a956-7dcc716b8b94`
 
 ### QRCode para Instalação Direta
 
-![QRCode Expo](https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://expo.dev/accounts/luvieirasantos/projects/bolt-expo-nativewind/updates/aac25f3b-aef0-48b2-9198-0ffa2b61a7ce)
+![QRCode Expo](https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://expo.dev/accounts/luvieirasantos/projects/bolt-expo-nativewind/updates/fb3136a9-bf32-4fd4-ae6a-8b0a97bc292c)
 
 **Como usar:**
-1. Instale o app **Expo Go** no seu celular ([Android](https://play.google.com/store/apps/details?id=host.exp.exponent) | [iOS](https://apps.apple.com/br/app/expo-go/id982107779))
-2. Escaneie o QRCode acima
-3. O app será carregado automaticamente
+1. Instale o app **Expo Go 3.0+** no seu celular ([Android](https://play.google.com/store/apps/details?id=host.exp.exponent) | [iOS](https://apps.apple.com/br/app/expo-go/id982107779))
+2. Certifique-se de que o Expo Go está atualizado (necessário para SDK 54)
+3. Escaneie o QRCode acima
+4. O app será carregado automaticamente na SDK 54
+
+### 🔄 Publicar Atualizações Futuras
+
+Para publicar novas atualizações:
+
+```bash
+# Login (se necessário)
+npx eas-cli login
+
+# Publish com mensagem automática
+npm run publish
+
+# Ou com mensagem customizada
+npm run publish:message
+```
 
 ## 📱 Credenciais de teste
 
@@ -57,9 +84,12 @@ git checkout 29e453968a2d989c2b4d31dac4e836493655b5aa
 
 ## 🚀 Tecnologias
 
-- **Frontend**: React Native, Expo
+- **Frontend**: React Native 0.81.5 (New Architecture enabled)
+- **Framework**: Expo SDK 54.0.22
+- **React**: 19.1.0
 - **UI Components**: React Native Paper
-- **Navegação**: Expo Router
+- **Navegação**: Expo Router 6.0
+- **Animações**: React Native Reanimated 4.1 + Worklets
 - **Formulários**: React Hook Form + Zod
 - **Estado**: React Hooks
 - **Armazenamento**: AsyncStorage
@@ -123,7 +153,9 @@ mottuV3/
 - Node.js 18+
 - npm ou yarn
 - Expo CLI
-- Android Studio / Xcode (para desenvolvimento nativo)
+- **Expo Go 3.0+** (no celular, para testar via QR code)
+- Android Studio (para desenvolvimento Android nativo)
+- **Xcode 16.1+** (para desenvolvimento iOS nativo - recomendado Xcode 26 para SDK 54)
 
 ### Passos de Instalação
 
@@ -312,6 +344,16 @@ Para suporte técnico ou dúvidas:
 - Verifique os logs de debug para identificar problemas
 
 ## 🔄 Changelog
+
+### v4.0.0 - Atualização Expo SDK 54 (2025-11-07)
+- ✅ Atualização da Expo SDK de 53.0.23 para 54.0.22
+- ✅ Atualização do React de 19.0.0 para 19.1.0
+- ✅ Atualização do React Native de 0.79.1 para 0.81.5
+- ✅ Atualização do react-native-reanimated de 3.17.x para 4.1.1
+- ✅ Instalação do react-native-worklets (peer dependency obrigatória)
+- ✅ Todas as bibliotecas do Expo atualizadas para versões compatíveis com SDK 54
+- ✅ Documentação atualizada com instruções de publish
+- ⚠️ Última SDK com suporte à Legacy Architecture
 
 ### v3.2.0 - Modo Demo e Login sem API
 - ✅ Adição de botão "Entrar sem requisição da API" na tela de login

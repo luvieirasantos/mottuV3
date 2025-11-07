@@ -1,12 +1,16 @@
 {
   "name": "bolt-expo-starter",
   "main": "expo-router/entry",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "private": true,
   "scripts": {
     "dev": "EXPO_NO_TELEMETRY=1 expo start",
     "build:web": "expo export --platform web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "publish": "npx eas-cli update --auto",
+    "publish:message": "npx eas-cli update",
+    "doctor": "npx expo-doctor",
+    "check-deps": "npx expo install --check"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.4.1",
