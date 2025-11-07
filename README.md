@@ -216,20 +216,6 @@ export const DEBUG_CONFIG = {
 };
 ```
 
-## 🚀 Deploy no Render
-
-### Configuração Básica (Recomendada)
-
-A aplicação já vem configurada com a URL da API do Render por padrão. Para deploy básico:
-
-1. **Conecte seu repositório no Render**
-2. **Configure as seguintes opções**:
-   - **Build Command**: `npm run build`
-   - **Start Command**: `npm start`
-   - **Node Version**: 18 ou superior
-
-### Configuração Avançada com Variáveis de Ambiente (Opcional)
-
 Para personalizar configurações, adicione as seguintes variáveis no painel "Environment":
 
 ```env
@@ -307,21 +293,6 @@ const formatTest = await testApiResponseFormat();
 - **`docs/DEBUGGING.md`** - Guia de debugging e resolução de problemas
 - **`docs/CORRECOES.md`** - Documentação das correções implementadas
 
-## 🐛 Resolução de Problemas
-
-### Erro "Resposta inválida da API"
-✅ **RESOLVIDO**: O problema foi causado por incompatibilidade entre o formato esperado e o formato real da API.
-
-**Solução implementada:**
-- Tipos atualizados para refletir a estrutura real
-- Validação corrigida para verificar os campos corretos
-- Mapeamento ajustado para converter dados corretamente
-- Logs detalhados para debugging futuro
-
-### Problemas Comuns
-1. **Token expirado**: Faça logout e login novamente
-2. **Erro de conectividade**: Verifique a conexão com a internet
-3. **Credenciais inválidas**: Verifique email e senha
 
 ## 🤝 Contribuição
 
