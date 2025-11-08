@@ -69,3 +69,6 @@ android/build/
 # ios
 ios/build/
 *.xcworkspace/xcuserdata/
+
+# chrome dev session
+chrome-dev-session/
