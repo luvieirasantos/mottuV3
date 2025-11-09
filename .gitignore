@@ -72,3 +72,5 @@ ios/build/
 
 # chrome dev session
 chrome-dev-session/
+
+.claude
