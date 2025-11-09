@@ -176,13 +176,88 @@ npm install
 yarn install
 ```
 
-3. **(Opcional) Configure as variáveis de ambiente**
+3. **Configure as variáveis de ambiente**
 ```bash
-# Para configurações avançadas, copie o arquivo de exemplo
+# Copie o arquivo de exemplo para criar suas variáveis de ambiente
 cp .env.example .env
 
-# A URL da API já está configurada por padrão para o Render
-# Não é necessário configurar nada para uso básico
+# Edite o arquivo .env com suas configurações específicas
+```
+
+### 📋 Configuração das Variáveis de Ambiente
+
+O projeto utiliza variáveis de ambiente para configurar conexões com APIs e definir comportamentos da aplicação. Siga os passos abaixo para configurar corretamente:
+
+#### 🔧 Passo a Passo
+
+1. **Copie o arquivo de exemplo:**
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Edite o arquivo `.env`** conforme suas necessidades:
+   ```env
+   # API Configuration
+   API_BASE_URL=https://api-mottu-sp3-java.onrender.com
+
+   # Environment
+   NODE_ENV=development
+
+   # Authentication
+   JWT_SECRET=mottuSecretKey2024Sprint3JavaAdvancedFIAP
+   TOKEN_EXPIRATION=5184000000
+   REFRESH_THRESHOLD=86400000
+
+   # Development Settings
+   ENABLE_LOGS=true
+   ENABLE_API_TESTS=true
+   MOCK_API_RESPONSES=false
+   ```
+
+#### 📝 Descrição das Variáveis
+
+| Variável | Descrição | Valor Padrão | Obrigatório |
+|----------|-----------|--------------|-------------|
+| `API_BASE_URL` | URL base da API de autenticação | `https://api-mottu-sp3-java.onrender.com` | Sim |
+| `NODE_ENV` | Ambiente da aplicação (development/production) | `development` | Não |
+| `JWT_SECRET` | Chave secreta para validação de tokens JWT | `mottuSecretKey2024Sprint3JavaAdvancedFIAP` | Sim |
+| `TOKEN_EXPIRATION` | Tempo de expiração do token (ms) | `5184000000` | Não |
+| `REFRESH_THRESHOLD` | Limite para refresh do token (ms) | `86400000` | Não |
+| `ENABLE_LOGS` | Habilita logs detalhados no console | `true` | Não |
+| `ENABLE_API_TESTS` | Habilita funções de teste da API | `true` | Não |
+| `MOCK_API_RESPONSES` | Utiliza respostas mockadas para testes | `false` | Não |
+
+#### ⚠️ Considerações de Segurança
+
+- **Nunca** envie o arquivo `.env` para o repositório Git
+- O arquivo `.env.example` serve como template e pode ser versionado
+- Em produção, utilize variáveis de ambiente do serviço de hospedagem
+- Mantenha a `JWT_SECRET` em segredo e utilize valores fortes
+
+#### 🚀 Configurações para Diferentes Ambientes
+
+**Desenvolvimento Local:**
+```env
+NODE_ENV=development
+API_BASE_URL=http://localhost:8080
+ENABLE_LOGS=true
+ENABLE_API_TESTS=true
+```
+
+**Produção:**
+```env
+NODE_ENV=production
+API_BASE_URL=https://sua-api-producao.com
+ENABLE_LOGS=false
+ENABLE_API_TESTS=false
+```
+
+**Staging/Testes:**
+```env
+NODE_ENV=staging
+API_BASE_URL=https://api-staging.seuprojeto.com
+MOCK_API_RESPONSES=true
+ENABLE_LOGS=true
 ```
 
 4. **Execute o projeto**
@@ -193,18 +268,6 @@ yarn dev
 ```
 
 ## 🔧 Configuração da API
-
-### Variáveis de Ambiente
-```env
-# API Configuration
-API_BASE_URL=https://api-mottu-sp3-java.onrender.com
-API_TIMEOUT=10000
-API_RETRY_ATTEMPTS=3
-
-# JWT Configuration
-JWT_SECRET=mottuSecretKey2024Sprint3JavaAdvancedFIAP
-JWT_EXPIRATION=5184000000
-```
 
 ### Debug e Logs
 Para habilitar logs detalhados, edite `src/config/debug.ts`:
@@ -219,18 +282,22 @@ export const DEBUG_CONFIG = {
 };
 ```
 
-Para personalizar configurações, adicione as seguintes variáveis no painel "Environment":
+### Configurações Adicionais
 
-```env
-API_BASE_URL=https://api-mottu-sp3-java.onrender.com
-NODE_ENV=production
-JWT_SECRET=mottuSecretKey2024Sprint3JavaAdvancedFIAP
-TOKEN_EXPIRATION=5184000000
-REFRESH_THRESHOLD=86400000
-ENABLE_LOGS=false
-ENABLE_API_TESTS=false
-MOCK_API_RESPONSES=false
+Para ambientes de produção ou serviços de hospedagem (como Expo EAS, Vercel, etc.), configure as variáveis de ambiente diretamente no painel do serviço:
+
+**Exemplo para Expo EAS:**
+```bash
+eas build:configure --platform all
+eas secret:create --scope project --name API_BASE_URL --value "https://sua-api.com"
+eas secret:create --scope project --name JWT_SECRET --value "sua-chave-secreta"
 ```
+
+**Variáveis recomendadas para produção:**
+- `NODE_ENV=production`
+- `ENABLE_LOGS=false`
+- `ENABLE_API_TESTS=false`
+- `MOCK_API_RESPONSES=false`
 
 ## 📖 Como Usar
 
@@ -297,13 +364,6 @@ const formatTest = await testApiResponseFormat();
 - **`docs/CORRECOES.md`** - Documentação das correções implementadas
 
 
-## 🤝 Contribuição
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
 
 
 
@@ -311,12 +371,6 @@ const formatTest = await testApiResponseFormat();
 
 Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
 
-## 📞 Suporte
-
-Para suporte técnico ou dúvidas:
-- Abra uma issue no repositório
-- Consulte a documentação em `docs/`
-- Verifique os logs de debug para identificar problemas
 
 ## 🔄 Changelog
 
