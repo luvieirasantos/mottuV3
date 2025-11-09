@@ -8,6 +8,9 @@ Mottu é uma aplicação mobile desenvolvida em React Native/Expo para gerenciam
 **React Native:** 0.81.5
 **React:** 19.1.0
 
+## 📱 video
+https://youtu.be/z8TNBjPZm0E
+
 
 ## 📱 Link da Versão Publicada no Expo
 
